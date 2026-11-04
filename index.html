@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f8e3eb">
+<title>For Case ♡</title>
+
+<style>
+:root {
+  --rose: #bd6d8c;
+  --ink: #765565;
+  --paper: #fffaf8;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 15%, #ffffffa8 0 2px, transparent 3px),
+    radial-gradient(circle at 85% 24%, #ffffff9c 0 2px, transparent 3px),
+    linear-gradient(135deg, #fce4ec, #f8dce8 55%, #fff0f5);
+  font-family: Georgia, "Times New Roman", serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 16px 60px;
+  overflow-x: hidden;
+  color: var(--ink);
+}
+
+.container {
+  width: 100%;
+  max-width: 490px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font: 10px/1.5 Arial, sans-serif;
+  color: #b47791;
+}
+
+.intro { margin-bottom: 28px; }
+
+.intro h1 {
+  color: #a45c79;
+  font-size: clamp(27px, 7vw, 34px);
+  font-weight: normal;
+  margin: 9px 0 10px;
+}
+
+.intro p {
+  color: #a7798c;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.envelope-wrap {
+  position: relative;
+  width: min(100%, 420px);
+  margin: 0 auto;
+  padding: 10px 0 0;
+}
+
+.envelope {
+  position: relative;
+  height: 205px;
+  width: 100%;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #efb9cb, #e5a0b9);
+  box-shadow: 0 18px 38px #a45c7929;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #f4c8d6, #d989a7);
+  clip-path: polygon(0 0, 50% 56%, 100% 0);
+  z-index: 1;
+}
+
+.envelope::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(35deg, #d98ba8, #edb4c7);
+  clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+  z-index: 2;
+}
+
+.envelope-heart {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  z-index: 4;
+  color: white;
+  font-size: 43px;
+  line-height: 1;
+  filter: drop-shadow(0 3px 5px #9e55754d);
+  animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+.open-btn {
+  margin-top: 25px;
+  background: linear-gradient(135deg, #c77997, #ad5d7e);
+  color: white;
+  border: 0;
+  padding: 15px 29px;
+  border-radius: 999px;
+  font: 14px Georgia, serif;
+  cursor: pointer;
+  box-shadow: 0 8px 20px #a45c7930;
+}
+
+.music-player {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 17px auto 0;
+  padding: 10px 15px;
+  background: #fffaf8cc;
+  border: 1px solid #e9c5d2;
+  border-radius: 999px;
+}
+
+.music-player.visible { display: flex; }
+
+.music-btn {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: #bd6d8c;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.music-copy { text-align: left; }
+.music-title { color: #a45c79; font-size: 12px; }
+.music-status { color: #b68b9c; font: 10px Arial; margin-top: 3px; }
+
+.letter {
+  background: var(--paper);
+  border: 1px solid #f2dce4;
+  border-radius: 17px;
+  padding: 31px 25px 29px;
+  margin-top: 25px;
+  text-align: left;
+  box-shadow: 0 15px 40px #a45c791c;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(35px);
+  transition: max-height 2s ease, opacity .9s ease, transform 1s ease;
+}
+
+.letter.show {
+  max-height: 7000px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.letter-top {
+  text-align: center;
+  color: #d39aae;
+  letter-spacing: 5px;
+  font-size: 13px;
+  margin-bottom: 17px;
+}
+
+.letter h2 {
+  text-align: center;
+  color: #b56885;
+  font-weight: normal;
+  font-size: 26px;
+  margin: 0 0 27px;
+}
+
+.letter p {
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.95;
+  margin: 0 0 19px;
+}
+
+.signature {
+  text-align: center;
+  color: #b56885;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.9;
+  margin-top: 30px;
+}
+
+.little-heart {
+  display: block;
+  font-size: 23px;
+  margin-top: 10px;
+}
+
+.footer {
+  color: #b77b91;
+  font-size: 11px;
+  margin-top: 27px;
+}
+
+.floating-heart {
+  position: fixed;
+  bottom: -35px;
+  color: #d77d9e;
+  pointer-events: none;
+  animation: floatUp linear forwards;
+  z-index: 1;
+  opacity: .75;
+}
+
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 5;
+  animation: sparkleOut .9s ease-out forwards;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  12% { transform: translate(-50%, -50%) scale(1.12); }
+  24% { transform: translate(-50%, -50%) scale(1); }
+  36% { transform: translate(-50%, -50%) scale(1.08); }
+}
+
+@keyframes floatUp {
+  to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes sparkleOut {
+  from { opacity: 1; transform: scale(.7); }
+  to { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.5); }
+}
+
+@media (max-width: 380px) {
+  body { padding-top: 32px; }
+  .letter { padding: 27px 19px; }
+  .letter p { font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="letterAudio" preload="auto" loop>
+  <source src="your-audio.mp3" type="audio/mpeg">
+</audio>
+
+<main class="container">
+
+<header class="intro">
+  <div class="eyebrow">A little something from my heart</div>
+  <h1>For you, Case ♡</h1>
+  <p>Some things are better said with a little extra love.</p>
+</header>
+
+<div class="envelope-wrap">
+  <div class="envelope">
+    <div class="envelope-heart">♥</div>
+  </div>
+</div>
+
+<button class="open-btn" id="openButton" onclick="openLetter()">
+  Open your letter ♡
+</button>
+
+<div class="music-player" id="musicPlayer">
+  <button class="music-btn" id="musicButton" onclick="toggleMusic()">Ⅱ</button>
+  <div class="music-copy">
+    <div class="music-title">A little soundtrack for this letter ♡</div>
+    <div class="music-status" id="musicStatus">Now playing · on repeat</div>
+  </div>
+</div>
+
+<article class="letter" id="letter">
+  <div class="letter-top">✧ &nbsp; ♡ &nbsp; ✧</div>
+  <h2>Dear Case, ♡</h2>
+
+  <p>I want to start by saying that I am genuinely sorry for making you feel unappreciated lately. Knowing that someone I care about has been feeling that way, especially because of how I have been showing up, is something I don't want to brush aside.</p>
+
+  <p>I don't ever want you to feel like your presence in my life is something I take for granted. You deserve to feel appreciated, acknowledged, wanted and valued. Not occasionally, not only when I am reminded to express it, but consistently. And I recognise that perhaps I haven't been doing the best job of making you feel that.</p>
+
+  <p>Sometimes I get caught up in my own thoughts and everything happening around me, and I forget how important it is to communicate the things I feel. But I don't want my actions, or the absence of certain actions, to leave you questioning how much you mean to me.</p>
+
+  <p>I appreciate you more than I probably communicate. I appreciate your personality, your humour, your little quirks, the conversations we have and the different sides of you that I get to experience. I appreciate the time you give me, the effort you make and the little things you probably don't even realise I notice.</p>
+
+  <p>I don't think appreciation should only be expressed through grand gestures or elaborate declarations. Sometimes it is in the smallest things. Remembering something you told me, asking how your day went, making time for you, listening when you need to talk and reminding you that you are thought about even when we aren't together.</p>
+
+  <p>I want to become better at those things. I want you to experience the softer, more intentional side of me. I want to make a conscious effort to show you that I value having you in my life instead of assuming that you automatically know.</p>
+
+  <p>I also want you to know that I don't expect you to constantly communicate your needs before I make an effort. I want to pay attention. I want to understand what makes you feel loved, what makes you feel appreciated and what I can do differently to make our connection feel healthier and more fulfilling for both of us.</p>
+
+  <p>I don't want us to get so caught up in the little misunderstandings that we forget to enjoy each other. I want the laughter, the random conversations, the affection, the silly moments, the deep talks and all those ordinary experiences that somehow become special because we're sharing them.</p>
+
+  <p>I know an apology doesn't automatically change how someone feels, and I don't expect a letter to make up for anything I haven't been expressing. I would rather let my actions gradually demonstrate what my words are trying to communicate.</p>
+
+  <p>You matter to me, Case. And I don't want you feeling like you have to compete for my attention or convince me to appreciate you. I want you to feel that naturally through the way I treat you.</p>
+
+  <p>I am sorry for the moments where I could have made you feel more loved, more noticed or more appreciated and didn't. I am not perfect, but I am willing to recognise where I fall short and make a genuine effort to do better.</p>
+
+  <p>If there's one thing I hope you take away from this, it's that I don't want to become comfortable with having you around and forget to appreciate the person you are. I want to keep discovering you, choosing you intentionally and finding new ways to make you feel special.</p>
+
+  <p>Thank you for being you, for the moments we've shared and for allowing me to be part of your world. I hope I get to give you more reasons to smile, more reasons to feel appreciated and more reasons to feel good about what we're building together.</p>
+
+  <p>You deserve tenderness, consideration, effort and a love that doesn't leave you guessing. And I want to be more mindful of giving you that.</p>
+
+  <div class="signature">
+    With love, always ♡<br><br>
+    Someone who appreciates you more than<br>
+    she sometimes knows how to express.
+    <span class="little-heart">♥</span>
+  </div>
+</article>
+
+<footer class="footer">Made with a little extra love, just for you.</footer>
+
+</main>
+
+<script>
+let opened = false;
+
+const audio = document.getElementById("letterAudio");
+const musicPlayer = document.getElementById("musicPlayer");
+const musicButton = document.getElementById("musicButton");
+const musicStatus = document.getElementById("musicStatus");
+
+function updateMusicControl(playing) {
+  musicButton.textContent = playing ? "Ⅱ" : "▶";
+  musicButton.setAttribute("aria-label", playing ? "Pause music" : "Play music");
+  musicStatus.textContent = playing ? "Now playing · on repeat" : "Paused · tap to play";
+}
+
+async function startMusic() {
+  try {
+    await audio.play();
+    updateMusicControl(true);
+  } catch (error) {
+    updateMusicControl(false);
+    musicStatus.textContent = "Tap play to start the music";
+  }
+}
+
+function toggleMusic() {
+  if (audio.paused) {
+    startMusic();
+  } else {
+    audio.pause();
+    updateMusicControl(false);
+  }
+}
+
+function openLetter() {
+  if (opened) return;
+  opened = true;
+
+  document.getElementById("letter").classList.add("show");
+  document.getElementById("openButton").textContent = "A little reminder that you're special ♡";
+  musicPlayer.classList.add("visible");
+
+  audio.currentTime = 0;
+  startMusic();
+  makeSparkles();
+
+  setTimeout(() => {
+    document.getElementById("letter").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 450);
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "floating-heart";
+  heart.textContent = Math.random() > .25 ? "♥" : "♡";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (12 + Math.random() * 17) + "px";
+  heart.style.animationDuration = (7 + Math.random() * 5) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 12500);
+}
+
+function makeSparkles() {
+  const symbols = ["✦", "✧", "♡", "·"];
+
+  for (let i = 0; i < 18; i++) {
+    const sparkle = document.createElement("span");
+    sparkle.className = "sparkle";
+    sparkle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    sparkle.style.left = (45 + Math.random() * 10) + "vw";
+    sparkle.style.top = (35 + Math.random() * 20) + "vh";
+    sparkle.style.setProperty("--dx", (Math.random() * 180 - 90) + "px");
+    sparkle.style.setProperty("--dy", (Math.random() * 180 - 90) + "px");
+    sparkle.style.color = "#c77997";
+    sparkle.style.fontSize = (12 + Math.random() * 18) + "px";
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 1000);
+  }
+}
+
+audio.addEventListener("error", () => {
+  musicStatus.textContent = "Audio file couldn't be loaded";
+  updateMusicControl(false);
+});
+
+setInterval(createHeart, 950);
+</script>
+
+</body>
+</html>
